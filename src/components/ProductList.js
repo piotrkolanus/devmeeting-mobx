@@ -7,9 +7,9 @@ class ProductList extends Component {
     state = {
         isProductsVisible: true,
         products: [
-            { id: 0, name: 'apple', isPromoted: true, tags: ['opis', 'opis2'] },
-            { id: 1, name: 'coffee', isPromoted: true, tags: ['opis', 'opis2'] },
-            { id: 2, name: 'water', price:24},
+            { id: 0, name: 'apple', isPromoted: true, tags: ['fruit', 'red'], price: 10 },
+            { id: 1, name: 'coffee', isPromoted: true, tags: ['energy', 'black'], price:18 },
+            { id: 2, name: 'water',tags: ['drink', 'wet'], price:24},
             { id: 3, name: 'orange', price:12},
             { id: 4, name: 'orange', price:36}
         ],
@@ -43,7 +43,7 @@ class ProductList extends Component {
     filterProducts = (e) => {
         const currentProducts = [...this.state.products];
         console.log(e.target.value);
-        const filtered = currentProducts.filter(product => e.target.value === product.name);
+        const filtered = currentProducts.filter(product => product.name.includes(e.target.value));
 
         let isVisible = false;
 
@@ -63,20 +63,14 @@ class ProductList extends Component {
             <input onChange= {this.filterProducts}></input>    
         <ul>
             {this.state.isProductsVisible && this.state.products.map(p => {
-                return (p.isPromoted ? (
-                    
-                    <li key={p.id}>
-                        <PromotedProduct name={p.name} onBuyClick={this.handleBuyClick}/>
-                        <Tags tags={p.tags}/>   
-                    </li>
-                    ): (
+                return (
                     <li key={p.id}>
                             <Product name={p.name} onBuyClick={this.handleBuyClick} id={p.id} price={p.price}/>
                         <Tags tags={p.tags}/>
                     </li>
-                ))
-                    
+                )
                     })}
+
                     {this.state.filtered.map(p => (
                         <li key={p.id}>
                             <Product name={p.name} onBuyClick={this.handleBuyClick} id={p.id} price={p.price}/>
