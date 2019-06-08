@@ -5,13 +5,16 @@ import productStore from '../stores/ProductStore';
 import {observer, inject} from 'mobx-react'
 import Tags from './Tags';
 import { toJS } from 'mobx';
+import basketStore from '../stores/BasketStore';
 
 @inject('productStore')
 @observer
 class ProductList extends Component {
 
-    handleBuyClick = id => {
+    handleBuyClick = (id) => {
         productStore.buyProduct(id);
+        const boughtProduct = productStore.products.find((product)=> product.id === id)
+        basketStore.addToBasket(boughtProduct)
             
     }
 
